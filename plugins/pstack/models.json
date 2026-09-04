@@ -2,11 +2,11 @@
   "tiers": {
     "default": "opus",
     "strongest": "fable",
-    "panel": ["opus", "fable", "sonnet", "haiku"]
+    "panel": ["opus", "fable"]
   },
   "efforts": ["low", "medium", "high", "xhigh", "max"],
   "defaultEffort": "session",
-  "available": ["opus", "fable", "sonnet", "haiku"],
+  "available": ["opus", "fable"],
   "roles": [
     { "role": "feature, refactoring", "models": "default", "skill": "poteto-mode" },
     { "role": "bug-fix", "models": "strongest", "skill": "poteto-mode" },
@@ -36,21 +36,15 @@
     "models": {
       "anthropic": {
         "opus": "anthropic/claude-opus-5-5",
-        "fable": "anthropic/claude-fable-5-1",
-        "sonnet": "anthropic/claude-sonnet-5-5",
-        "haiku": "anthropic/claude-haiku-4-5"
+        "fable": "anthropic/claude-fable-5-1"
       },
       "openai": {
         "opus": "openai/gpt-6.1-sol",
-        "fable": "openai/gpt-6-astra",
-        "sonnet": "openai/gpt-6-sol",
-        "haiku": "openai/gpt-6-luna"
+        "fable": "openai/gpt-6-astra"
       },
       "openai-codex": {
         "opus": "openai-codex/gpt-6.1-sol",
-        "fable": "openai-codex/gpt-6-astra",
-        "sonnet": "openai-codex/gpt-6-sol",
-        "haiku": "openai-codex/gpt-6-luna"
+        "fable": "openai-codex/gpt-6-astra"
       }
     }
   }
