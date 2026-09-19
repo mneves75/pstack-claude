@@ -31,7 +31,6 @@ function plugin(mutate = () => {}) {
   const root = mkdtempSync(join(tmpdir(), "invariants-"));
   fixtures.push(root);
   skill(root, "good", "");
-  skill(root, "principle-good", "user-invocable: false\n");
   mutate(root);
   return root;
 }
@@ -54,6 +53,11 @@ describe("static plugin invariants", () => {
   test("disable-model-invocation on a skill fails and names the file", () => {
     const root = plugin((r) => skill(r, "flagged", "disable-model-invocation: true\n"));
     expect(() => check(root)).toThrow(/skills\/flagged\/SKILL\.md: disable-model-invocation: true breaks/);
+  });
+
+  test("a retired principle skill fails even when hidden from the menu", () => {
+    const root = plugin((r) => skill(r, "principle-returned", "user-invocable: false\n"));
+    expect(() => check(root)).toThrow("retired principle skills reappeared (LOCAL-OVERRIDES §5): principle-returned");
   });
 
   test("a principle leaf missing user-invocable: false fails", () => {

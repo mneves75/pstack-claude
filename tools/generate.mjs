@@ -171,6 +171,13 @@ export function validatePluginLayout(pluginRoot) {
   if (existsSync(join(pluginRoot, "commands"))) {
     throw new Error("plugins/pstack/commands/ exists; trampolines belong in .codex-plugin/prompts/ (CHANGES 0.9.13)");
   }
+  // LOCAL-OVERRIDES §5: engineering guidance lives in
+  // poteto-mode/references/engineering-*.md. An upstream sync that brings a
+  // principle-* skill back fails here by name instead of shipping it silently.
+  const principles = readdirSync(join(pluginRoot, "skills")).filter((d) => d.startsWith("principle-"));
+  if (principles.length) {
+    throw new Error(`retired principle skills reappeared (LOCAL-OVERRIDES §5): ${principles.join(", ")}`);
+  }
   // #58: a plugin's agents register under the plugin namespace, so a dispatch
   // of the bare name errors at runtime with "Agent type 'x' not found".
   const agents = pluginAgentPaths(pluginRoot).map((p) => basename(p, ".md"));
@@ -680,7 +687,9 @@ export function overrideSheetBlock(models) {
 // no model: a full claude-* ID is rejected by the Agent tool, and a backticked
 // family name hard-codes a default that belongs in models.json.
 export function strayModelSlugs(file, text, models) {
-  const families = models.available.join("|");
+  // LOCAL-OVERRIDES §1 drops sonnet and haiku from `available`; keep them in the
+  // pattern so a banned family is still a stray rather than silently allowed.
+  const families = [...new Set([...models.available, "sonnet", "haiku"])].join("|");
   const SLUG_RE = new RegExp(`claude-(?:${families})[0-9a-z.-]*|\`(?:${families})\``);
   const lines = text.split("\n");
   const owned = regions(models)

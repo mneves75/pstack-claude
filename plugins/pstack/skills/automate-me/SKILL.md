@@ -1,6 +1,6 @@
 ---
 name: automate-me
-description: "Use for \"automate me\", \"create/update/refresh my -mode skill\", \"turn/capture my preferences or working style into a skill\", or wanting agents to follow how the user works. Drafts or revises a personal -mode skill via plugin-dev:skill-development + unslop, optionally pulling fresh evidence from recent transcripts."
+description: "Use for \"automate me\", \"create/update/refresh my -mode skill\", \"turn/capture my preferences or working style into a skill\", or wanting agents to follow how the user works. Drafts or revises a personal -mode skill via plugin-dev:skill-development + writing guidance, optionally pulling fresh evidence from recent transcripts."
 ---
 
 # Automate me
@@ -9,7 +9,7 @@ On Codex, read the [platform mapping](../poteto-mode/references/codex-tools.md),
 
 A guided flow for turning the user's working conventions into a skill agents will follow. The output is one `-mode` skill tailored to them (e.g. `jay-mode`, `priya-mode`).
 
-This skill orchestrates three others: an inline mining pass (see step 1), the **plugin-dev:skill-development** skill (authoring), and the **unslop** skill (prose discipline). It sequences them. It doesn't replace them.
+This workflow combines the inline mining pass (step 1), available skill-authoring guidance, and the active writing preferences.
 
 ## Flow
 
@@ -75,7 +75,7 @@ Use the **plugin-dev:skill-development** skill to author the skill. Placement:
 
 ### 5. Iterate on prose
 
-Apply the **unslop** skill and `plugin-dev:skill-development`'s writing guidelines to every line.
+Apply the active writing preferences and `plugin-dev:skill-development`'s writing guidelines to every line.
 
 Show the draft to the user and take feedback. Expect multiple iterations. Cut ruthlessly. A mode skill is not a manual.
 
