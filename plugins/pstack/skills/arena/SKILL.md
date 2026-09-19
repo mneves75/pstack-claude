@@ -29,7 +29,7 @@ The N candidates will receive the same prompt, so the prompt is the contract.
 1. State the artifact each candidate is producing.
 2. Derive the rubric. State what success looks like for *this* task, then turn it into 3-6 concrete gradeable criteria. The rubric is the picker's tool in Phase D. Candidates only see the task.
 3. Pick the runners. Use the `arena runners` line in `pstack-models.md`. If the sheet or that line is missing, run one each on the defaults in [Models](#models). An `auto` or `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. If the `Agent` tool rejects a configured entry, run that seat on its family's default and say so. Families go by model name, such as Opus or Fable. With no family match, use the single-role default in [Models](#models). If it rejects a default, use the closest valid slug of the same family from its error message. Spawn more when the arena covers multiple design directions. Same model N times when the work is generation-bound rather than judgment-sensitive.
-4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
+4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per [coordination guidance](../poteto-mode/references/engineering-coordination.md).
 
 ## Phase B: Fan out
 
@@ -57,7 +57,7 @@ Record the pick and the reason in a short synthesis note alongside the base arti
 
 Walk each losing candidate once more and identify what is worth porting into the base. The signal is usually one or two things per candidate, not most of it.
 
-Fold each graft in by hand, per the **redesign-from-first-principles** principle skill. Don't paste mechanically. The result has to remain coherent under one mental model.
+Fold each graft in by hand, per [evolution guidance](../poteto-mode/references/engineering-evolution.md). Don't paste mechanically. The result has to remain coherent under one mental model.
 
 Record what was grafted, from which candidate, and what was rejected and why.
 
@@ -65,7 +65,7 @@ When N candidates converge on the same shape, that is a strong agreement signal.
 
 ## Phase F: Verify
 
-The synthesized artifact has to hold up under the same scrutiny as any other output, per the **prove-it-works** principle skill.
+The synthesized artifact has to hold up under the same scrutiny as any other output, per [verification guidance](../poteto-mode/references/engineering-verification.md).
 
 If verification surfaces a problem the arena did not catch, either Phase A was wrong (re-frame and re-run) or one candidate caught it and you missed the graft (go back to Phase E). Don't paper over.
 

@@ -68,12 +68,12 @@ const rules = [
   },
   {
     source: "#59 item 2 verify the process",
-    file: "principle-prove-it-works/SKILL.md",
+    file: "poteto-mode/references/engineering-verification.md",
     phrase: "Verify the process as well as the outcome.",
   },
   {
     source: "#59 item 3 red is a colour",
-    file: "principle-prove-it-works/SKILL.md",
+    file: "poteto-mode/references/engineering-verification.md",
     phrase: "Red is a colour, not a measurement.",
   },
   {

@@ -28,7 +28,8 @@ describe("committed models.json", () => {
   test("available models are the names the Claude Code Agent tool accepts", () => {
     // The Agent tool's `model` parameter is an enum of family names; a full ID
     // such as claude-opus-5-5 is rejected before the subagent starts.
-    expect([...models.available].sort()).toEqual(["fable", "haiku", "opus", "sonnet"]);
+    // LOCAL-OVERRIDES §1: upstream also lists haiku and sonnet; this machine bans both.
+    expect([...models.available].sort()).toEqual(["fable", "opus"]);
   });
 
   test("the file stays one row per entry so a role change is a one-line diff", () => {

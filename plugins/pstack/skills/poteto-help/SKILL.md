@@ -1,6 +1,6 @@
 ---
 name: poteto-help
-description: Guides users through pstack setup, /poteto-mode, and picking the skill, playbook, or principle for a task. Type /poteto-help with a question.
+description: Guides users through pstack setup, /poteto-mode, and picking the skill or playbook for a task. Type /poteto-help with a question.
 ---
 
 # Poteto help
@@ -66,7 +66,6 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
 | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
 | Strip comments before review, using a reviewer that didn't write them | [`/no-comments`](../no-comments/SKILL.md) |
-| Clean AI tells out of prose | [`/unslop`](../unslop/SKILL.md) |
 | Write docs, an RFC, a README, a PR description, or a commit message to a standard | [`/technical-writing`](../technical-writing/SKILL.md) |
 | Hear the last reply again in plain words | [`/bro`](../bro/SKILL.md) |
 | Give agents a scripted way to drive the app and prove behavior | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |
@@ -80,7 +79,7 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |
 | Find their way around pstack | `/poteto-help` |
 
-If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.
+If a skill directory next to this one is missing from the table, read its frontmatter and route by its description.
 
 Close calls:
 
@@ -93,11 +92,11 @@ Close calls:
 
 Not in pstack:
 
-- The Cursor driver skills have no port. The driver policy in poteto-mode's Non-negotiables names the Claude Code equivalents, the `run` skill and a project `verify` skill.
+- The Cursor driver skills have no port. The driver rule in poteto-mode's [Task routing](../poteto-mode/SKILL.md#task-routing) names the Claude Code equivalents, the `run` skill and a project `verify` skill.
 - `/loop` is a Claude Code bundled skill, and the **plugin-dev:skill-development** skill is Claude Code's skill-authoring guidance.
 - pstack has no orchestrate skill. Orchestrate is a `/poteto-mode` playbook. If the slash menu shows an orchestrate command, another plugin provides it.
 
-## Playbooks and principles
+## Playbooks and engineering guidance
 
 Playbooks are step lists inside `/poteto-mode`, not skills, so they have no slash command. Inside `/poteto-mode`, describing the task picks one, and these phrases name one directly:
 
@@ -112,7 +111,7 @@ Without `/poteto-mode`, a phrase such as "babysit this pr" can start pstack's st
 
 pstack has no planning skill. Claude Code's plan mode works alongside it. For work that spans phases or stacked PRs, asking `/poteto-mode` for a plan runs the [Multi-phase plan playbook](../poteto-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
 
-Principles are one-rule skills that `/poteto-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." On Claude Code the `principle-*` leaves are hidden from the slash menu and `/poteto-mode` reads them by path; other runtimes may list them in their skill picker. The [Principles index](../poteto-mode/SKILL.md#principles) lists them.
+This port has no principle skills. `/poteto-mode` reads the conditional [engineering guidance](../poteto-mode/SKILL.md#conditional-engineering-guidance) documents under `poteto-mode/references/engineering-*.md` when a task needs them. The user steers by naming the rule, as in "prove it works. show me the real output."
 
 ## Fix a run that went wrong
 
@@ -125,7 +124,7 @@ Principles are one-rule skills that `/poteto-mode` reads and cites in its replie
 | A skill didn't load on its own | Read its description and the current runtime's skill-loading instructions. Invoke it explicitly when needed; `/poteto-mode` doesn't run every skill. |
 | Parallel agents overwrote each other | Give each agent its own worktree. |
 | An overnight run moved but finished nothing | Read [Autonomous run](../poteto-mode/playbooks/autonomous-run.md) and the current runtime's wake mechanism. For a queue, read the selected Autopilot playbook above. Give the run a check that can pass or fail. |
-| The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
+| The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works rule in the [verification guidance](../poteto-mode/references/engineering-verification.md). |
 
 For a run that drifts, [`references/prompting.md`](references/prompting.md) has one-line steers, and [`references/recipes.md`](references/recipes.md) has prompts to adapt.
 

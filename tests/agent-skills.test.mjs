@@ -221,7 +221,7 @@ describe("shared Agent Skills tree", () => {
     }
   });
 
-  test("linked skills keep their own resources and sibling principle leaves", () => {
+  test("linked skills keep their own conditional engineering resources", () => {
     const root = mkdtempSync(join(tmpdir(), "pstack-agent-skills-"));
     const installed = join(root, "unrelated-home", ".agents", "skills");
     mkdirSync(installed, { recursive: true });
@@ -235,7 +235,7 @@ describe("shared Agent Skills tree", () => {
       for (const file of [
         join(poteto, "SKILL.md"),
         join(poteto, "references", "codex-tools.md"),
-        join(poteto, "..", "principle-model-the-domain", "SKILL.md"),
+        join(poteto, "references", "engineering-design.md"),
       ]) {
         expect(readFileSync(file, "utf8").length).toBeGreaterThan(0);
       }

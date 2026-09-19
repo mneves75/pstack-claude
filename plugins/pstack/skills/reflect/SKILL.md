@@ -49,13 +49,13 @@ One `Agent` call, `subagent_type: "general-purpose"`, with `model` from the `ref
 
 ### 4. Structural enforcement check
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
+Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See [verification guidance](../poteto-mode/references/engineering-verification.md).
 
 ### 5. Apply
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
+Present the Accepted/Rejected/Backlog result. Apply skill edits when the current request already authorizes them; otherwise ask which proposed edits to apply. Preserve the named scope and do not require a second approval for the same authorized change.
 
-Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
+Prepare backlog items locally with their intended tracker and content. Submit them only when the user has authorized that external write and destination; authorization to review or edit skills does not itself authorize tracker submissions.
 
 For each approved Accepted item, follow the Routing field exactly:
 
