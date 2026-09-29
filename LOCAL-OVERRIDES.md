@@ -117,3 +117,42 @@ they inherit its engineering-reference wording. Caller links in upstream's
 reworded playbooks were rewritten again, and three leftover plain-text
 "principle skill" mentions (`architect`, its runner prompt, and the
 `typescript-best-practices` patterns) now link the references too.
+
+Sync of 2026-09-29 (upstream 0.9.50): two conflicts in prose and four in adjacent files.
+`interrogate` keeps upstream's backticked `Agent` wording with the family list cut to
+"Opus or Fable" (§1). Upstream deleted the unread portable copy at
+`poteto-mode/references/agents/poteto-agent.md`; the deletion stands, and the wording this
+machine changed lives in `agents/poteto-agent.md`, which stamps the effort agents.
+`worktree-cleanup.md` keeps the engineering-reference links with upstream's `worktree-audit.mjs`
+rename. `automate-me` keeps the sentence without `unslop`. Tests: `models.test.mjs` takes
+upstream's new layout with the two-model `available` expectation; `agent-skills.test.mjs`
+takes upstream's existence check with `engineering-design.md` in place of the retired
+`principle-model-the-domain`; `generate.test.mjs` plants its stray `subagent_type` in `why`
+because `unslop` no longer exists. Upstream now runs the generator under Bun
+(`bun tools/generate.mjs`), not Node.
+
+Sync of 2026-10-04 (upstream 0.9.67, pin v0.15.9): five textual conflicts, all in prose
+the §5 consolidation already rewrote, plus three semantic repairs the tests caught.
+`poteto-mode/SKILL.md` keeps the Task routing and "Conditional engineering guidance"
+sections; upstream's reworded full-autonomy line ("say in plain words what the operator
+could tell you to do instead", no shorthand token) moved into `engineering-coordination.md`,
+upstream's `benchmark-checklist` trigger became a Task routing bullet, and the new
+`principle-explain-the-number` is retired and folded into `engineering-verification.md`
+(`benchmark-checklist` now links there). `agents/poteto-agent.md` takes upstream's
+"spawn a fresh agent per task" description with the local "conditional engineering
+guidance" wording. `autopilot-full.md` takes upstream's text with the prove-it-works
+link rewritten; `hillclimb.md` keeps the verification-guidance link and adds upstream's
+benchmark-checklist sentence. `docs/reference.md` keeps the local skill-count wording
+(32 public, 0 principle) with upstream's Pi mention.
+Repairs: upstream's new `pi.models` table in `models.json` names `sonnet` and `haiku`;
+the generator and `parseModels` reject keys outside `available`, so both are dropped from
+all three providers (§1), which also re-stamps `pi-tools.md`. The generated `pi models:` grammar example in
+`tools/runtimes.mjs` says `fable=` instead of `sonnet=`, so the §1 scan stays empty.
+The static `model` tool description in `plugins/pstack/pi/agent-tools.ts` still lists
+all four families; it sits outside the §1 scan, and the Pi runtime rejects any alias
+not in `available` (`pi/config.ts`). The Pi `package.json`
+keywords lose `unslop` to match the plugin manifests (§5). `models.test.mjs` deletes
+`fable`, not the dropped `haiku`, in the Pi-table case and pins that `sonnet` cannot
+re-enter through the Pi table. Upstream's Pi tests import `typebox` from the root
+`bun.lock`; run `bun install --frozen-lockfile` before `bun test`, or 12 Pi tests fail
+on pristine upstream too.

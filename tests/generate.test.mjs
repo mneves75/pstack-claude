@@ -866,12 +866,12 @@ describe("plan, changes, apply", () => {
     const root = repoCopy();
     append(root, ...STRAY_SLUG);
     append(root, "plugins/pstack/skills/deslop/SKILL.md", "\n[gone](missing.md)\n");
-    append(root, "plugins/pstack/skills/unslop/SKILL.md", '\nsubagent_type: "poteto-agent"\n');
+    append(root, "plugins/pstack/skills/why/SKILL.md", '\nsubagent_type: "poteto-agent"\n');
     const failures = problems(root);
     expect(failures).toEqual([
       expect.stringContaining("plugins/pstack/skills/tdd/SKILL.md:"),
       "invalid local markdown links:\ndeslop/SKILL.md -> missing.md (missing)",
-      expect.stringContaining("skills/unslop/SKILL.md:"),
+      expect.stringContaining("skills/why/SKILL.md:"),
     ]);
     const check = generate(root, "--check");
     expect(check.status).toBe(1);
