@@ -134,8 +134,12 @@ describe("parseModels", () => {
     expect(parse((p) => (p.pi.extra = 1))).toThrow('models.json: pi names "extra"; its keys are "fallback" and "models"');
     expect(parse((p) => (p.pi.fallback = "google"))).toThrow('models.json: pi.fallback "google" is not a provider in pi.models');
     expect(parse((p) => (p.pi.models.openai = "openai/gpt"))).toThrow("models.json: pi.models.openai must be an object");
-    expect(parse((p) => delete p.pi.models["openai-codex"].haiku)).toThrow(
-      'models.json: pi.models.openai-codex has no Pi model for "haiku"',
+    expect(parse((p) => delete p.pi.models["openai-codex"].fable)).toThrow(
+      'models.json: pi.models.openai-codex has no Pi model for "fable"',
+    );
+    // LOCAL-OVERRIDES §1: a banned family cannot re-enter through the Pi table.
+    expect(parse((p) => (p.pi.models.anthropic.sonnet = "anthropic/claude-sonnet-5-5"))).toThrow(
+      'models.json: pi.models.anthropic names "sonnet", which is not in available',
     );
     expect(parse((p) => (p.pi.models.anthropic.gpt = "anthropic/gpt"))).toThrow(
       'models.json: pi.models.anthropic names "gpt", which is not in available',
