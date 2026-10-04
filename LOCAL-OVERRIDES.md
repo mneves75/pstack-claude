@@ -156,3 +156,26 @@ keywords lose `unslop` to match the plugin manifests (§5). `models.test.mjs` de
 re-enter through the Pi table. Upstream's Pi tests import `typebox` from the root
 `bun.lock`; run `bun install --frozen-lockfile` before `bun test`, or 12 Pi tests fail
 on pristine upstream too.
+
+Repair of 2026-10-04 (no upstream change): §5 removed poteto-mode's `## Non-negotiables`
+and the Principles section, but 7 links and 11 sentences still pointed at them (and at
+the retired Laziness Protocol). The driver rule now lives in `## Task routing`, so
+`DRIVER_LINE` in `tools/generate.mjs`, the five stamped playbooks, `bug-fix.md`,
+`multi-phase-plan.md`, `codex-tools.md`, `pi-tools.md`, `docs/reference.md` and the
+`substitutions.json` hints point there; smallest-change wording points at
+`engineering-evolution.md`; `figure-it-out` reads the Conditional engineering guidance.
+`eval.md`'s own "Non-negotiables for blinding" label is unrelated and stays.
+`tests/local-overrides.test.mjs` resolves every in-repo markdown anchor against GitHub
+heading slugs and rejects the retired phrases, so the next consolidation fails loudly.
+
+## 6. tdd is test-first for behavior changes (prose, will conflict on sync)
+
+Upstream `tdd` triggers "only when the user explicitly asks for TDD … or when the bug
+has an obvious cheap local test target". This machine's contract is tests first, and
+Matt Pocock's `implement`/`implement-spec` call `tdd` expecting a test-first loop, so
+`plugins/pstack/skills/tdd/SKILL.md` now defaults to writing the failing test first for
+any bug fix or feature, and excludes prototypes, spikes, and pure config or wiring.
+The impracticality escape hatch stays, but the agent must say why and name the check it
+used instead. `tests/local-overrides.test.mjs` fails if the description starts with
+"Use only when" again. **Expect a conflict on the next upstream sync of `tdd`**;
+re-apply by hand.
