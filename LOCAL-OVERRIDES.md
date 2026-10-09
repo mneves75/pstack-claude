@@ -168,6 +168,37 @@ the retired Laziness Protocol). The driver rule now lives in `## Task routing`, 
 `tests/local-overrides.test.mjs` resolves every in-repo markdown anchor against GitHub
 heading slugs and rejects the retired phrases, so the next consolidation fails loudly.
 
+Sync of 2026-10-09 (upstream 0.9.80): rebase of the four local commits onto upstream
+`bb5501b`; 13 textual conflicts, all in prose or generator code the earlier syncs already
+reconciled, resolved the same way. Commit by commit:
+`models.json` `tiers.panel` stays `["opus", "fable"]`; `architect`, `arena` and
+`setup-pstack` keep the two-entry model lists (§1). `interrogate` drops upstream's
+Reviewer C/D rows (`sonnet`, `haiku`) and keeps upstream's reworded fallback paragraph
+("same family and reasoning tier") with the family list cut to "Opus or Fable".
+`pi-tools.md` and `tools/runtimes.mjs` take upstream's new text ("Add one when the
+session's provider has no column above ...") with `fable=<provider/id>` in the example in
+place of `sonnet=`. `docs/reference.md` says 33 skill directories, 33 public, 0
+`principle-*` (upstream added `poteto-help`), keeps the `/poteto-help` row and drops
+`/unslop`. `autopilot-full.md`, `feature.md` and `worktree-cleanup.md` take upstream's new
+text (the program-size announcement, the `worktree.baseRef` note, the `wip:N,untracked:N`
+audit wording) with every `principle-*` reference rewritten to the matching
+`engineering-*.md` link; `feature.md` also keeps "the smallest-change rule in evolution
+guidance" in place of "Laziness Protocol". `tools/generate.mjs` `strayModelSlugs` takes
+upstream's version-number-tolerant pattern and keeps the local union with `sonnet` and
+`haiku` so a banned family is still a stray.
+Repairs the generator did not flag: upstream's new `poteto-help` skill pointed at the
+retired `/unslop`, the `principle-*` directories, "Non-negotiables" and the Principles
+index; it now points at `engineering-*.md` and Task routing, and its `prompting.md` says
+"rule" instead of "principle". Upstream's Copilot prose (`setup-pstack/copilot.md`,
+`copilot-tools.md`, `tools/runtimes.mjs`) named "a Sonnet-class Claude model" and "a
+Haiku-class model" as the setup-model floor; it now says "an Opus-class Claude model" and
+"a weaker model", so the §1 scan stays empty. Upstream's new Copilot driver paragraph in `copilot-tools.md` linked
+`../SKILL.md#non-negotiables`, a heading §5 removed; `tests/local-overrides.test.mjs` caught it and
+it now links `#task-routing`. Upstream edited no retired `principle-*`
+skill or `unslop`, and added no new `principle-*` skill, so nothing new to fold into
+`engineering-*.md` this time.
+Upstream's new `lean/` models, `bunfig.toml` and Copilot hooks needed no local change.
+
 ## 6. tdd is test-first for behavior changes (prose, will conflict on sync)
 
 Upstream `tdd` triggers "only when the user explicitly asks for TDD … or when the bug

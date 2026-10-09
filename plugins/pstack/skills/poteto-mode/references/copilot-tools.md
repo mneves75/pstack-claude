@@ -50,7 +50,7 @@ Skills name Claude Code model aliases in their Models sections. Those aliases ar
 
 `setup-pstack` lists the models from the `model` enum of the `task` tool and writes only IDs it saw there. After it writes the sheet, it runs its `check-sheet.sh` script, which applies the hook's checks.
 
-Run `setup-pstack`, and the parent session that orchestrates a panel, on a model at least as strong as gpt-5.4-mini or a Sonnet-class Claude model. On a Haiku-class model, setup picked models the user never chose in about half of the smoke runs.
+Run `setup-pstack`, and the parent session that orchestrates a panel, on a model at least as strong as gpt-5.4-mini or an Opus-class Claude model. On a weaker model, setup picked models the user never chose in about half of the smoke runs.
 
 ## Session routing hook
 
@@ -94,7 +94,7 @@ In poteto-mode's playbooks, `eval` reads candidate transcripts from Copilot sess
 
 ## Driver and bundled skills pstack references
 
-The [driver policy](../SKILL.md#non-negotiables) selects the app driver. For skills and drivers named by these workflows, use these Copilot equivalents:
+The [driver policy](../SKILL.md#task-routing) selects the app driver. For skills and drivers named by these workflows, use these Copilot equivalents:
 
 | Skill or driver named in pstack | On GitHub Copilot |
 |---------------------------------|-------------------|
