@@ -17,6 +17,13 @@ const raw = JSON.parse(readFileSync(join(repoRoot, "plugins/pstack/models.json")
 const models = loadModels();
 
 describe("committed models.json", () => {
+  test("Pi planning uses the dedicated host route instead of execution aliases", () => {
+    const guide = readFileSync(join(skillsDir, "poteto-mode/references/pi-tools.md"), "utf8");
+    expect(guide).toContain("Planning (`architect`) and read-only advice override the execution aliases");
+    expect(guide).toContain("`subagent_type: pstack:effort-<level>`");
+    expect(guide).not.toContain("Diverse-model panels (`arena`, `architect`");
+  });
+
   test("execution defaults use Sol xhigh without an advisory model in panels", () => {
     expect(raw.defaultEffort).toBe("xhigh");
     expect(raw.codex).toEqual({
