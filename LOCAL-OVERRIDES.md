@@ -14,11 +14,10 @@ tier (`default`, `strongest`, `panel`) and each tier resolves to the model alias
   `arena runners`, `arena cross-judge pool`, `architect runners` and `interrogate reviewers`.
 - `available` is `["opus", "fable"]`. Upstream also lists `sonnet` and `haiku`; dropping
   them keeps `/setup-pstack` from reintroducing a banned model through the override sheet.
-- `tiers.default` (`opus`), `tiers.strongest` (`fable`), `efforts`, `defaultEffort` and
-  `codex` follow upstream (`codex.strongest` `gpt-6-astra`, default `gpt-6-sol`, panel
-  `gpt-6-astra`, `gpt-6-sol`, `gpt-6-luna`). The Claude side is two models after the Sonnet
-  removal; the GPT arm is what keeps a panel cross-family, which is the entire reason a
-  panel exists.
+- `tiers.default` (`opus`), `tiers.strongest` (`fable`) and supported `efforts` follow
+  upstream. `defaultEffort` is `xhigh`. Codex execution tiers and panel entries use
+  `gpt-6.1-sol`; both OpenAI Pi aliases map to that execution model. Planning and read-only
+  advice use the host's dedicated `gpt-6-astra` route at `high`, never an executor alias.
 
 Rule this enforces: Claude models are `opus` or `fable` only. Never Sonnet, never Haiku,
 not as a cheap explorer or wrapper.
@@ -30,14 +29,10 @@ conflicts only when upstream edits `tiers.panel` or `available`; keep the two-en
 
 Check: `rg -ni 'sonnet|haiku' plugins/pstack/skills/` must return nothing.
 
-**Known cost of this override.** A panel's value is cross-family disagreement, and the Claude arm
-is now two models from one family. `codex.panel` restores diversity on Codex only. On Claude
-Code the honest position is that `interrogate`, `arena runners` and `architect runners` run a
-same-family panel. The `pstack-models.md` override sheet cannot fix this: its grammar takes
-model aliases for the `Agent` tool's `model` parameter, and the GPT rails here are *agents*
-reached through `codex-auto`, not model names. Adding a real third arm means editing each
-panel skill's dispatch prose, which is a sync conflict per skill. Not done. Decide it against
-measured panel quality, not in advance.
+**Known cost of this override.** Codex execution panels share one model. Report reduced
+model diversity; independent contexts and distinct review questions do not establish
+cross-model independence. A required different-model check is blocked if no permitted
+reviewer is available. Do not send implementation or code review to the planning advisor.
 
 ## 2. Autonomy — confirm before anything leaves the machine (prose, will conflict on sync)
 
