@@ -21,6 +21,9 @@ describe("committed models.json", () => {
     const guide = readFileSync(join(skillsDir, "poteto-mode/references/pi-tools.md"), "utf8");
     expect(guide).toContain("Planning (`architect`) and read-only advice override the execution aliases");
     expect(guide).toContain("`subagent_type: pstack:effort-<level>`");
+    expect(guide).toContain("planners may write explicitly requested design or plan artifacts");
+    expect(guide).toContain("use `xhigh` reasoning");
+    expect(guide).not.toContain("vary the reasoning effort");
     expect(guide).not.toContain("Diverse-model panels (`arena`, `architect`");
   });
 

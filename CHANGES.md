@@ -2,6 +2,21 @@
 
 This file is the release changelog, with one `## <version> - <title>` entry per release, newest first. The Cursor-to-Claude rewrite rules live in [`tools/substitutions.json`](tools/substitutions.json), and the [sync boundary](CONTRIBUTING.md#the-sync-boundary) in `CONTRIBUTING.md` defines how a change to upstream's skill content is declared.
 
+## 0.9.83 - local model routing on port upstream 0.9.82
+
+This fork incorporates port upstream `1bfdab4` (0.9.82), including Pi catalog and
+Homebrew package discovery improvements. It keeps the existing local model-family
+restrictions, consent boundaries and consolidated engineering references.
+
+Codex execution and review use Sol with xhigh reasoning. Planning and read-only
+advice use the host's dedicated Astra route with high reasoning. OpenAI Pi
+execution aliases resolve to Sol, and planning explicitly overrides those aliases
+with the host's advisor model and effort agent. Execution panels report reduced
+model diversity rather than routing code review to the planning advisor.
+Planning candidates may write the explicitly requested design packages their
+workflow consumes; advisory calls stay read-only. Execution panels keep the
+configured xhigh effort even when every candidate uses the same model.
+
 ## 0.9.82 - restore upstream's checks in two principle skills and run haiku 5.5 on Pi
 
 `principle-attack-the-premise` and `principle-test-behavior-not-implementation` follow upstream's text again. The attack-the-premise Stop rule holds the next fix until the shared premise is written down and a per-actor census exists. When the premise is not about actors, the census is a rerunnable check whose result would differ if the premise were false. Test behavior asks whether a test would still pass if every imported function returned `undefined`, and names five shapes that would. Its keep-list adds an absence-only test that fails when the forbidden effect is injected, and a constant pin on a value promised to users. The `poteto-mode` summaries of both principles follow upstream as well. @johnkattenhorn found the drift in [#253](https://github.com/michael-denyer/pstack-claude/issues/253); the fix is in [#254](https://github.com/michael-denyer/pstack-claude/pull/254).

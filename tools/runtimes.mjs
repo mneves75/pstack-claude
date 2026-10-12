@@ -137,10 +137,11 @@ export function piModelNamesSection(models) {
     "`provider/id`, passed through unchanged, and `inherit-parent`, `auto`, or no `model` runs the child on the " +
     "parent's current model. Planning (`architect`) and read-only advice override the execution aliases: " +
     "pass the full `provider/id` configured for the host's dedicated planning/advisor route and select " +
-    "`subagent_type: pstack:effort-<level>` for that route's effort. Keep those agents read-only; never use " +
-    "the planning route for implementation or code review. Execution and review panels (`arena`, `interrogate`, `how` critics, `reflect`) " +
-    "stay diverse only while their aliases resolve to distinct models. If one model family is all you can reach, " +
-    "vary the reasoning effort and note in the verdict that diversity was reduced.\n\n" +
+    "`subagent_type: pstack:effort-<level>` for that route's effort. Keep advisory agents read-only; " +
+    "planners may write explicitly requested design or plan artifacts. Never use the planning route for " +
+    "product implementation or code review. Execution and review panels (`arena`, `interrogate`, `how` critics, `reflect`) " +
+    `use ${code(models.defaultEffort)} reasoning. When their aliases resolve to the same model, report ` +
+    "reduced model diversity without changing the configured effort.\n\n" +
     "`/setup-pstack` writes the configured model list. On Pi, keep the aliases and remap them with `pi models:`."
   );
 }
