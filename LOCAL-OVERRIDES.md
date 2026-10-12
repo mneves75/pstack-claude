@@ -201,6 +201,13 @@ Upstream's new `lean/` models, `bunfig.toml` and Copilot hooks needed no local c
 
 ## 6. tdd is test-first for behavior changes (prose, will conflict on sync)
 
+Sync of 2026-10-12 (port upstream 0.9.82, `1bfdab4`): merged the Pi catalog,
+Homebrew discovery and release updates without replacing the local model families
+or the shared engineering references. The upstream model table's additional
+families remain excluded. The two upstream principle leaves changed by this
+release remain consolidated under `engineering-verification.md`; they are not
+reintroduced as separately loaded skills.
+
 Upstream `tdd` triggers "only when the user explicitly asks for TDD … or when the bug
 has an obvious cheap local test target". This machine's contract is tests first, and
 Matt Pocock's `implement`/`implement-spec` call `tdd` expecting a test-first loop, so
