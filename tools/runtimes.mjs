@@ -104,13 +104,14 @@ export function codexModelNamesSection(models) {
     "Skills name Claude defaults (a single-role default for code/prose/judgment plus a diverse-model panel for " +
     "diverse-model panels; each model-consuming skill lists its own in a Models section). These slugs do not " +
     "resolve on Codex. Substitute your configured Codex models:\n\n" +
-    `- Single-model roles: your primary Codex model (for example ${code(models.codex.default)}).\n` +
+    `- Single-model execution roles: ${code(models.codex.default)} at ${code(models.defaultEffort)} reasoning.\n` +
     `- Roles that default to the strongest Claude model (${strongest.map((r) => code(r.role)).join(", ")}): ` +
-    `your strongest Codex model (for example ${code(models.codex.strongest)}).\n` +
-    "- Diverse-model panels (`arena`, `architect`, `interrogate`, `how` critics, `reflect`): the adversarial " +
-    "signal comes from model diversity, so use the distinct Codex models available to you. A good default panel " +
-    `on ChatGPT is ${codeList(models.codex.panel)}. If only one model family is reachable, vary reasoning ` +
-    "effort and note in the verdict that diversity was reduced.\n\n" +
+    `${code(models.codex.strongest)} at ${code(models.defaultEffort)} reasoning.\n` +
+    "- Execution and review panels (`arena`, `interrogate`, `how` critics, `reflect`): use " +
+    `${codeList(models.codex.panel)} at ${code(models.defaultEffort)} reasoning. Note reduced model diversity ` +
+    "when every participant uses the same model; independent contexts do not provide cross-model independence.\n" +
+    "- Planning (`architect`) and read-only advice: select the host's dedicated planning/advisor route and its effort, " +
+    "rather than an execution alias. Never use that route for implementation or code review.\n\n" +
     "`/setup-pstack` writes the configured model list. On Codex, set it to your Codex model slugs."
   );
 }

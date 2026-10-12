@@ -5,7 +5,7 @@
     "panel": ["opus", "fable"]
   },
   "efforts": ["low", "medium", "high", "xhigh", "max"],
-  "defaultEffort": "session",
+  "defaultEffort": "xhigh",
   "available": ["opus", "fable"],
   "roles": [
     { "role": "feature, refactoring", "models": "default", "skill": "poteto-mode" },
@@ -27,9 +27,9 @@
     { "role": "interrogate reviewers", "models": "panel", "skill": "interrogate" }
   ],
   "codex": {
-    "default": "gpt-6-sol",
-    "strongest": "gpt-6-astra",
-    "panel": ["gpt-6-astra", "gpt-6-sol", "gpt-6-luna"]
+    "default": "gpt-6.1-sol",
+    "strongest": "gpt-6.1-sol",
+    "panel": ["gpt-6.1-sol"]
   },
   "pi": {
     "fallback": "anthropic",
@@ -40,11 +40,11 @@
       },
       "openai": {
         "opus": "openai/gpt-6.1-sol",
-        "fable": "openai/gpt-6-astra"
+        "fable": "openai/gpt-6.1-sol"
       },
       "openai-codex": {
         "opus": "openai-codex/gpt-6.1-sol",
-        "fable": "openai-codex/gpt-6-astra"
+        "fable": "openai-codex/gpt-6.1-sol"
       }
     }
   }

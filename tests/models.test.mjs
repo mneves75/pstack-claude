@@ -17,6 +17,20 @@ const raw = JSON.parse(readFileSync(join(repoRoot, "plugins/pstack/models.json")
 const models = loadModels();
 
 describe("committed models.json", () => {
+  test("execution defaults use Sol xhigh without an advisory model in panels", () => {
+    expect(raw.defaultEffort).toBe("xhigh");
+    expect(raw.codex).toEqual({
+      default: "gpt-6.1-sol",
+      strongest: "gpt-6.1-sol",
+      panel: ["gpt-6.1-sol"],
+    });
+    for (const provider of ["openai", "openai-codex"]) {
+      expect(Object.values(raw.pi.models[provider])).toEqual([
+        `${provider}/gpt-6.1-sol`, `${provider}/gpt-6.1-sol`,
+      ]);
+    }
+  });
+
   test("the pi block gives every available alias a Pi model on anthropic, openai, and openai-codex", () => {
     expect(raw.pi.fallback).toBe("anthropic");
     expect(Object.keys(raw.pi.models).sort()).toEqual(["anthropic", "openai", "openai-codex"]);
