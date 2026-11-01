@@ -212,3 +212,31 @@ The impracticality escape hatch stays, but the agent must say why and name the c
 used instead. `tests/local-overrides.test.mjs` fails if the description starts with
 "Use only when" again. **Expect a conflict on the next upstream sync of `tdd`**;
 re-apply by hand.
+
+## 7. Read-only `why`, bounded `babysit` (prose, will conflict on sync)
+
+Upstream `why` spawns every investigator with `readonly: false` because read-only mode can
+strip MCP access, and defaults to one investigator per available MCP category, with an inline
+answer allowed only after ruling out all seven. This machine treats tool availability as no
+reason to grant write access, and fan-out as a cost to justify:
+
+- `plugins/pstack/skills/why/SKILL.md`: spawns are `readonly: true`; a category whose MCP is
+  unreachable read-only is queried from the main session with read calls only, or recorded as
+  not searched; a denied read is recorded, never retried through a broader mode, another agent
+  or changed permissions; on Copilot, the platform mapping's `general-purpose` fallback for
+  MCP-needing read-only roles does not apply to these spawns. Source control is always
+  searched; other categories are selected by relevance; a simple question is answered inline
+  with no investigators and no synthesizer; every unsearched category gets a Sources
+  Consulted line and stays an explicit unknown. The Models and Reasoning effort
+  sections are generator-owned and unchanged.
+- `plugins/pstack/skills/why/references/investigator-prompt.md`: the investigator is told it is
+  read-only and how to record a denied read.
+- `plugins/pstack/skills/babysit/SKILL.md`: defers to an installed `babysit-pr`, keeps one
+  continuation owner per PR, gives a `gh`-only fallback for every sibling skill and for `loop`
+  (its inline review-comment read passes `--paginate`, so a PR with more than one page of
+  comments is read in full), limits the invocation's writes to commits and pushes on the PR's
+  head branch, makes `gh pr ready` and comment replies wait for an explicit request, and
+  reports the three-round cap as blocked, never ready.
+
+`tests/safety-hardening.test.mjs` fails if any of these reverts. **Expect a conflict on the
+next upstream sync of either skill**; re-apply by hand.

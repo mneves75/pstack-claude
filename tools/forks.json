@@ -264,6 +264,12 @@
       "since": "0.9.21",
       "upstream": "not-proposed"
     },
+    "plugins/pstack/skills/why/SKILL.md": {
+      "kind": "policy",
+      "why": "Spawns every investigator and the synthesizer with readonly: true, queries a category whose MCP is unreachable read-only from the main session with read calls only or records it as not searched, records a denied read instead of retrying it through a broader mode, another agent, or changed permissions, keeps the Copilot general-purpose fallback away from these spawns, always searches source control and selects other categories by relevance, answers a simple question inline with no investigators and no synthesizer, and gives every unsearched category a Sources Consulted line as an explicit unknown, leaving the generator-owned Models and Reasoning effort sections unchanged.",
+      "since": "0.9.84",
+      "upstream": "not-proposed"
+    },
     "plugins/pstack/skills/why/references/epistemics.md": {
       "kind": "policy",
       "why": "Adds the Claims about human decisions section that five other files cite for keeping a ruling's original wording and scope.",
@@ -272,7 +278,7 @@
     },
     "plugins/pstack/skills/why/references/investigator-prompt.md": {
       "kind": "policy",
-      "why": "Tells investigators to return a human ruling's attributable original wording per the epistemics section.",
+      "why": "Tells investigators to return a human ruling's attributable original wording per the epistemics section, that they are read-only and never write, post, comment, or change anything, and that a denied read is recorded under Gaps and never retried through another tool, mode, or agent.",
       "since": "0.9.34",
       "upstream": "not-proposed"
     },
