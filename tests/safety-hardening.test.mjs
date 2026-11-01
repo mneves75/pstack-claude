@@ -2,7 +2,9 @@
 // follows, so they pin the instruction contract (who may write, what a denied
 // read means, when a loop stops), not how a model behaves when it reads it.
 import { expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { createServer } from "node:http";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const root = resolve(import.meta.dir, "..");
@@ -95,6 +97,69 @@ test("babysit.portable-fallback: every sibling skill has a gh-only fallback", ()
   expect(uses.length).toBeGreaterThanOrEqual(4);
   for (const line of uses) expect(line).toMatch(/when (it is )?installed; otherwise/);
 });
+
+// Runs the fallback's own review-comment command with the real `gh` against a loopback fake
+// of GitHub's REST pagination: 30 comments per page unless `per_page` asks for more, at most
+// 100, and a `Link: rel="next"` header while pages remain. GH_HOST=github.localhost makes gh
+// speak plain http, and HTTP_PROXY sends every request to the fake, so nothing leaves the
+// machine. The token is fake, GH_CONFIG_DIR is a throwaway dir, and the child gets no HOME, so
+// no account config is read; GH_TELEMETRY=0 keeps gh from writing a device-id into the working
+// directory. This proves the documented command returns every comment, not that an agent reads
+// them all.
+test.skipIf(!Bun.which("gh"))("babysit.review-comments-complete: the gh fallback returns every page of review comments (skipped without gh)", async () => {
+  const reviewLine = section(babysit, "## Steps").split("\n").find((line) => /Review comments/.test(line)) ?? "";
+  const command = reviewLine.match(/`(gh api [^`]*\/pulls\/<number>\/comments)`/)?.[1] ?? "";
+  expect(command).toContain("repos/{owner}/{repo}/pulls/<number>/comments");
+
+  const total = 130;
+  const requests = [];
+  const server = createServer((req, res) => {
+    const url = new URL(req.url, "http://api.github.localhost");
+    requests.push({ method: req.method, path: url.pathname, page: url.searchParams.get("page") ?? "1" });
+    if (req.method !== "GET" || url.pathname !== "/repos/o/r/pulls/7/comments") {
+      res.writeHead(404, { "content-type": "application/json" });
+      res.end(JSON.stringify({ message: "Not Found" }));
+      return;
+    }
+    const perPage = Math.min(Number(url.searchParams.get("per_page") ?? 30), 100);
+    const page = Number(url.searchParams.get("page") ?? 1);
+    const next = page * perPage < total ? { link: `<http://api.github.localhost${url.pathname}?per_page=${perPage}&page=${page + 1}>; rel="next"` } : {};
+    const comments = Array.from({ length: total }, (_, i) => ({ id: i + 1, body: `review comment ${i + 1}` }));
+    res.writeHead(200, { "content-type": "application/json; charset=utf-8", ...next });
+    res.end(JSON.stringify(comments.slice((page - 1) * perPage, page * perPage)));
+  });
+  await new Promise((listening) => server.listen(0, "127.0.0.1", listening));
+  const config = mkdtempSync(join(tmpdir(), "babysit-gh-"));
+  try {
+    const gh = Bun.spawn([Bun.which("gh"), ...command.replace("<number>", "7").split(/\s+/).slice(1)], {
+      env: {
+        PATH: process.env.PATH ?? "",
+        GH_CONFIG_DIR: config,
+        GH_HOST: "github.localhost",
+        GH_REPO: "github.localhost/o/r",
+        GH_TOKEN: "fake-token",
+        HTTP_PROXY: `http://127.0.0.1:${server.address().port}`,
+        GH_NO_UPDATE_NOTIFIER: "1",
+        GH_TELEMETRY: "0",
+        GH_PROMPT_DISABLED: "1",
+        NO_COLOR: "1",
+      },
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    const [stdout, stderr, exit] = await Promise.all([new Response(gh.stdout).text(), new Response(gh.stderr).text(), gh.exited]);
+    expect({ exit, stderr }).toEqual({ exit: 0, stderr: "" });
+    // Without --slurp, gh prints each page as its own JSON array, back to back.
+    const ids = JSON.parse(`[${stdout.trim().replace(/\]\s*\[/g, "],[")}]`).flat().map((comment) => comment.id);
+    expect(ids.length).toBe(total);
+    expect(new Set(ids).size).toBe(total);
+    expect(requests.every((request) => request.method === "GET")).toBe(true);
+    expect(requests.map((request) => request.page)).toContain("2");
+  } finally {
+    server.close();
+    rmSync(config, { recursive: true, force: true });
+  }
+}, 20000);
 
 test("babysit.cap-is-escalation: the round cap reports blocked, never ready", () => {
   const cap = babysit.split("\n").find((line) => /three rounds/.test(line)) ?? "";

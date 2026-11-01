@@ -232,10 +232,11 @@ reason to grant write access, and fan-out as a cost to justify:
 - `plugins/pstack/skills/why/references/investigator-prompt.md`: the investigator is told it is
   read-only and how to record a denied read.
 - `plugins/pstack/skills/babysit/SKILL.md`: defers to an installed `babysit-pr`, keeps one
-  continuation owner per PR, gives a `gh`-only fallback for every sibling skill and for `loop`,
-  limits the invocation's writes to commits and pushes on the PR's head branch, makes `gh pr
-  ready` and comment replies wait for an explicit request, and reports the three-round cap as
-  blocked, never ready.
+  continuation owner per PR, gives a `gh`-only fallback for every sibling skill and for `loop`
+  (its inline review-comment read passes `--paginate`, so a PR with more than one page of
+  comments is read in full), limits the invocation's writes to commits and pushes on the PR's
+  head branch, makes `gh pr ready` and comment replies wait for an explicit request, and
+  reports the three-round cap as blocked, never ready.
 
 `tests/safety-hardening.test.mjs` fails if any of these reverts. **Expect a conflict on the
 next upstream sync of either skill**; re-apply by hand.
