@@ -30,10 +30,11 @@ describe("committed models.json", () => {
   test("execution defaults use Sol xhigh without an advisory model in panels", () => {
     expect(raw.defaultEffort).toBe("xhigh");
     expect(raw.codex).toEqual({
-      default: "gpt-6.1-sol",
-      strongest: "gpt-6.1-sol",
-      panel: ["gpt-6.1-sol"],
+      default: "gpt-6.2-sol",
+      strongest: "gpt-6.2-sol",
+      panel: ["gpt-6.2-sol"],
     });
+    // Pi 1.5.2 lists no 6.2 model, so the Pi aliases stay on 6.1.
     for (const provider of ["openai", "openai-codex"]) {
       expect(Object.values(raw.pi.models[provider])).toEqual([
         `${provider}/gpt-6.1-sol`, `${provider}/gpt-6.1-sol`,
