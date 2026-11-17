@@ -6,6 +6,7 @@
   },
   "efforts": ["low", "medium", "high", "xhigh", "max"],
   "defaultEffort": "xhigh",
+  "codexEffort": "high",
   "available": ["opus", "fable"],
   "roles": [
     { "role": "feature, refactoring", "models": "default", "skill": "poteto-mode" },

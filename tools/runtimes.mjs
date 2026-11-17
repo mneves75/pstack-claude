@@ -104,11 +104,11 @@ export function codexModelNamesSection(models) {
     "Skills name Claude defaults (a single-role default for code/prose/judgment plus a diverse-model panel for " +
     "diverse-model panels; each model-consuming skill lists its own in a Models section). These slugs do not " +
     "resolve on Codex. Substitute your configured Codex models:\n\n" +
-    `- Single-model execution roles: ${code(models.codex.default)} at ${code(models.defaultEffort)} reasoning.\n` +
+    `- Single-model execution roles: ${code(models.codex.default)} at ${code(models.codexEffort)} reasoning.\n` +
     `- Roles that default to the strongest Claude model (${strongest.map((r) => code(r.role)).join(", ")}): ` +
-    `${code(models.codex.strongest)} at ${code(models.defaultEffort)} reasoning.\n` +
+    `${code(models.codex.strongest)} at ${code(models.codexEffort)} reasoning.\n` +
     "- Execution and review panels (`arena`, `interrogate`, `how` critics, `reflect`): use " +
-    `${codeList(models.codex.panel)} at ${code(models.defaultEffort)} reasoning. Note reduced model diversity ` +
+    `${codeList(models.codex.panel)} at ${code(models.codexEffort)} reasoning. Note reduced model diversity ` +
     "when every participant uses the same model; independent contexts do not provide cross-model independence.\n" +
     "- Planning (`architect`) and read-only advice: select the host's dedicated planning/advisor route and its effort, " +
     "rather than an execution alias. Never use that route for implementation or code review.\n\n" +

@@ -298,4 +298,16 @@ describe("Codex model names", () => {
     }
     for (const family of raw.available) expect(section).not.toContain(`\`${family}\``);
   });
+
+  test("renders every Codex line at codexEffort, not the Claude defaultEffort", () => {
+    const raw = JSON.parse(readFileSync(join(repoRoot, "plugins/pstack/models.json"), "utf8"));
+    const section = codexModelNamesSection(
+      resolveModels({ ...raw, defaultEffort: "claude-marker", codexEffort: "codex-marker" }),
+    );
+    const lines = section.split("\n").filter((line) => line.includes(" reasoning"));
+
+    expect(lines).toHaveLength(3);
+    for (const line of lines) expect(line).toContain("at `codex-marker` reasoning");
+    expect(section).not.toContain("claude-marker");
+  });
 });
