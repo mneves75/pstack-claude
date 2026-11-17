@@ -15,9 +15,11 @@ tier (`default`, `strongest`, `panel`) and each tier resolves to the model alias
 - `available` is `["opus", "fable"]`. Upstream also lists `sonnet` and `haiku`; dropping
   them keeps `/setup-pstack` from reintroducing a banned model through the override sheet.
 - `tiers.default` (`opus`), `tiers.strongest` (`fable`) and supported `efforts` follow
-  upstream. `defaultEffort` is `xhigh`. Codex execution tiers and panel entries use
-  `gpt-6.1-sol`; both OpenAI Pi aliases map to that execution model. Planning and read-only
-  advice use the host's dedicated `gpt-6-astra` route at `high`, never an executor alias.
+  upstream. `defaultEffort` is `xhigh` for Claude Code; the Codex mapping renders the
+  Codex-only `codexEffort`, `high`. Codex execution tiers and panel entries use
+  `gpt-6.2-sol`; both OpenAI Pi aliases map to `gpt-6.1-sol`, since Pi 1.5.2 lists no 6.2
+  model. Planning and read-only advice use the host's dedicated `gpt-6.2-astra` route at
+  `high`, never an executor alias.
 
 Rule this enforces: Claude models are `opus` or `fable` only. Never Sonnet, never Haiku,
 not as a cheap explorer or wrapper.

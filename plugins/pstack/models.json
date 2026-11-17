@@ -6,6 +6,7 @@
   },
   "efforts": ["low", "medium", "high", "xhigh", "max"],
   "defaultEffort": "xhigh",
+  "codexEffort": "high",
   "available": ["opus", "fable"],
   "roles": [
     { "role": "feature, refactoring", "models": "default", "skill": "poteto-mode" },
@@ -27,9 +28,9 @@
     { "role": "interrogate reviewers", "models": "panel", "skill": "interrogate" }
   ],
   "codex": {
-    "default": "gpt-6.1-sol",
-    "strongest": "gpt-6.1-sol",
-    "panel": ["gpt-6.1-sol"]
+    "default": "gpt-6.2-sol",
+    "strongest": "gpt-6.2-sol",
+    "panel": ["gpt-6.2-sol"]
   },
   "pi": {
     "fallback": "anthropic",
